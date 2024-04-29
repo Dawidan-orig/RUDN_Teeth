@@ -1,18 +1,27 @@
+using MouthTrainer.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tooth : MonoBehaviour
+namespace MouthTrainer.Behaviours
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Tooth : MonoBehaviour, IDraggable
     {
-        
-    }
+        #region IDraggable
+        public void OnDrag()
+        {
+            
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void OnDragEnd()
+        {
+            
+        }
+
+        public void OnDragStart()
+        {
+            
+        }
+        #endregion
     }
 }
