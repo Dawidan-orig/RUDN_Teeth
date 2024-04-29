@@ -1,4 +1,6 @@
 using MouthTrainer.Core;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,39 +8,46 @@ namespace MouthTrainer.Input
 {
     public class Dragger : MonoBehaviour
     {
-        public InputAction leftMouseButton;
-        public InputAction mouseMovement;
+        public InputAction interaction;
+        public InputAction holdedMovement;
+        public InputAction groupingButton;
+        public int groupingAmount = 3;
         public float maxDragDistance = 10;
         // 64 - это слой "Interactable"
         public LayerMask checkingInLayer = 64;
 
-        // Можно и одну переменную использовать для удобства,
-        // И часто делать GetComponent().
-        // Но я предпочту кэшировать.
+        #region grouping
+        private GameObject _groupper;
+        private Dictionary<Transform, Transform> _objectToParent;
+        #endregion
+
+        #region dragging
         private GameObject _currentDraggable;
         private Vector3 _hitOffset;
         private float _currentDragDistance;
-        private IDraggable _currentDraggableInterface;
+        #endregion
 
         #region Unity
 
         private void OnEnable()
         {
-            leftMouseButton.Enable();
-            mouseMovement.Enable();
+            interaction.Enable();
+            holdedMovement.Enable();
+            groupingButton.Enable();
         }
 
         private void Start()
         {
-            leftMouseButton.started += DragStart;
-            mouseMovement.performed += DoDrag;
-            leftMouseButton.canceled += DragEnd;
+            interaction.started += DragStart;
+            holdedMovement.performed += DoDrag;
+            interaction.canceled += DragEnd;
         }
 
         private void OnDisable()
         {
-            leftMouseButton.Disable();
-            mouseMovement.Disable();
+            interaction.Disable();
+            holdedMovement.Disable();
+            groupingButton.Disable();
         }
 
         #endregion
@@ -53,18 +62,47 @@ namespace MouthTrainer.Input
                 out RaycastHit hit,
                 checkingInLayer)
                 )
+            {
                 if (hit.transform.TryGetComponent(out IDraggable comp))
                 {
-                    _currentDraggable = hit.transform.gameObject;
-                    _currentDraggableInterface = comp;
-                    _currentDraggableInterface.OnDragStart();
+                    if (groupingButton.IsPressed())
+                    {
+                        if (_groupper == null)
+                        {
+                            _groupper = new GameObject("Grouping of " + transform.name);
+                            _objectToParent = new();
+                        }
+
+                        _currentDraggable = _groupper;
+
+                        if (_groupper?.transform.childCount < groupingAmount)
+                        {
+                            if (!_objectToParent.ContainsKey(hit.transform))
+                                _objectToParent.Add(hit.transform, hit.transform.parent);
+                            hit.transform.parent = _groupper.transform;
+                        }
+                        else
+                            return;
+                    }
+                    else // Попадание по перетаскиваему без группировки
+                    {
+                        ReleaseGrouping();
+                        _currentDraggable = hit.transform.gameObject;
+                    }
+
+                    comp.OnDragStart();
+
+                    _hitOffset = _currentDraggable.transform.position - hit.point;
 
                     _currentDragDistance = Vector3.Distance(transform.position,
-                        _currentDraggable.transform.position);
-                    _currentDragDistance = Mathf.Clamp(_currentDragDistance,0,maxDragDistance);
-
-                    _hitOffset = hit.transform.position - hit.point;
+                        hit.transform.position - _hitOffset);
+                    _currentDragDistance = Mathf.Clamp(_currentDragDistance, 0, maxDragDistance);
                 }
+            }
+            else // Нажатие в пустоту
+            {
+                ReleaseGrouping();
+            }
         }
         private void DoDrag(InputAction.CallbackContext ctx)
         {
@@ -83,18 +121,20 @@ namespace MouthTrainer.Input
                 _currentDraggable.transform.position =
                     transform.position + toMouseDir * _currentDragDistance + _hitOffset;
 
-             // Вызов функции лучше делать после всего,
-             // Чтобы при использовании функции интерфейса
-             // У объекта сразу был обновлённый transform
-             _currentDraggableInterface.OnDrag();
+            // Вызов функции лучше делать после всего,
+            // Чтобы при использовании функции интерфейса
+            // У объекта сразу был обновлённый transform
+            foreach (IDraggable draggable in GetAllAvailableInterfaces())
+                draggable.OnDrag();
         }
         private void DragEnd(InputAction.CallbackContext ctx) 
         {
             if (_currentDraggable == null)
                 return;
 
-            _currentDraggableInterface.OnDragEnd();
-            _currentDraggableInterface = null;
+            foreach(IDraggable draggable in GetAllAvailableInterfaces())
+                draggable.OnDragEnd();
+
             _currentDraggable = null;
         }
         #endregion
@@ -104,6 +144,35 @@ namespace MouthTrainer.Input
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
                 (Vector3)Mouse.current.position.value + Vector3.forward);
             return (mouseWorld - transform.position).normalized;
+        }
+        private List<IDraggable> GetAllAvailableInterfaces() 
+        {
+            List<IDraggable> res = new List<IDraggable>();
+            if (_groupper == null)
+            {
+                res.Add(_currentDraggable.GetComponent<IDraggable>());
+            }
+            else 
+            {
+                res.AddRange(_groupper.GetComponentsInChildren<IDraggable>());
+            }
+
+            return res;
+        }
+        private void ReleaseGrouping() 
+        {
+            if (_groupper == null)
+                return;
+
+            for(int i = 0; i < _groupper.transform.childCount; i++) 
+            {
+                Transform child = _groupper.transform.GetChild(i);
+                child.parent = _objectToParent[child];
+                i--;
+            }
+
+            Destroy(_groupper);
+            _objectToParent = null;
         }
     }
 }

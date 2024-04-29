@@ -309,40 +309,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9419a95f0c37abd4997f942a5bc3581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftMouseButton:
-    m_Name: Left Mouse Button
+  interaction:
+    m_Name: Interaction
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 57a2c993-2324-4871-81fa-990785eefdde
+    m_Id: 933fb8cd-95fc-4cc5-b41d-4f58abd3bd08
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: b19bc9a9-f99c-44d3-9bd4-9f4bb9823144
+      m_Id: 93f03ec3-177a-4f47-925a-3ad9759788c0
       m_Path: <Mouse>/leftButton
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Left Mouse Button
+      m_Action: Interaction
       m_Flags: 0
     m_Flags: 0
-  mouseMovement:
-    m_Name: Mouse Movement
+  holdedMovement:
+    m_Name: Holded Movement
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 1fd0b3b5-4d80-4c03-a157-3994b80a4022
+    m_Id: 9d264d2e-0b3d-49b0-9d4f-edca40765c8e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: b8924226-389a-4ac8-b9a0-7ccaf1a98a48
+      m_Id: cb4daf3d-b1a8-4afa-a6fa-1ac043c820a7
       m_Path: <Mouse>/delta
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Mouse Movement
+      m_Action: Holded Movement
       m_Flags: 0
     m_Flags: 0
+  groupingButton:
+    m_Name: Grouping Button
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 628f9f35-854a-484c-b895-d15986b8b32a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 4f19fe44-c71b-4594-a2ab-c70fdb1bddde
+      m_Path: <Keyboard>/leftShift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Grouping Button
+      m_Flags: 0
+    m_Flags: 0
+  groupingAmount: 3
   maxDragDistance: 10
   checkingInLayer:
     serializedVersion: 2
