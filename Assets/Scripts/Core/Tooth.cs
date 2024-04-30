@@ -8,36 +8,38 @@ namespace MouthTrainer.Behaviours
 {
     public class Tooth : MonoBehaviour, IDraggable
     {
+        [Tooltip("—корость возвращени€ в изначальную позицию")]
         public float returningSpeed = 10;
+        [Tooltip(" нопка, которую слушает этот зуб дл€ возврата в изначальную позицию")]
         public Button listeningTo;
 
-        Vector3 _initialPos;
+        Vector3 _initialLocalPos;
 
-        Vector3 _moveStartpos;
+        Vector3 _moveStart_LocalPos;
         float _moveStartTime;
 
         private void Start()
         {
-            _initialPos = transform.position;
+            _initialLocalPos = transform.localPosition;
             listeningTo.onClick.AddListener(RevertToStart);
         }
 
         public void RevertToStart() 
         {
-            _moveStartpos = transform.position;
+            _moveStart_LocalPos = transform.localPosition;
             _moveStartTime = Time.realtimeSinceStartup;
             StartCoroutine(RevertingProcess());
         }
 
         private IEnumerator RevertingProcess() 
         {
-            const float CLOSE_ENOUGH = 0.01f;
+            const float CLOSE_ENOUGH = 0.0001f;
 
-            while (Vector3.Distance(transform.position, _initialPos) >= CLOSE_ENOUGH)
+            while (Vector3.Distance(transform.localPosition, _initialLocalPos) >= CLOSE_ENOUGH)
             {
                 float progress = (Time.realtimeSinceStartup - _moveStartTime) * returningSpeed;
 
-                transform.position = Vector3.Lerp(_moveStartpos, _initialPos, progress);
+                transform.localPosition = Vector3.Lerp(_moveStart_LocalPos, _initialLocalPos, progress);
 
                 yield return new WaitForEndOfFrame();
             }

@@ -8,12 +8,18 @@ namespace MouthTrainer.Input
 {
     public class Dragger : MonoBehaviour
     {
+        [Tooltip("Действие взаимодействия")]
         public InputAction interaction;
+        [Tooltip("Действие изменения ввода для взятого объекта")]
         public InputAction holdedMovement;
+        [Tooltip("Действие группировки")]
         public InputAction groupingButton;
+        [Tooltip("Макс. количество объектов для группировки")]
         public int groupingAmount = 3;
+        [Tooltip("Максмальная дистанция, на которую можно отодвинуть объект")]
         public float maxDragDistance = 10;
         // 64 - это слой "Interactable"
+        [Tooltip("Слой проверки взаимодействующих")]
         public LayerMask checkingInLayer = 64;
 
         #region grouping

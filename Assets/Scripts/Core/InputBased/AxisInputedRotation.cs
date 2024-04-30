@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 namespace MouthTrainer.Input {
     public class AxisInputedRotation : MonoBehaviour
     {
+        [Tooltip("ƒействие ввода, определ€ющиее поворот")]
         public InputAction axisMovementInput;
+        [Tooltip("—корость поворота всего transform'а")]
         public float rotationSpeed = 50;
 
         private void OnEnable()

@@ -5,9 +5,13 @@ namespace MouthTrainer.Input
 {
     public class FirstPersonCameraControl : MonoBehaviour
     {
+        [Tooltip("Скорость движения камеры")]
         public float translationSpeed = 1;
+        [Tooltip("Скорость вращения камеры")]
         public float rotationSensitivity = 75;
+        [Tooltip("Действие перемещения камеры в плоскости")]
         public InputAction WASD_Controls;
+        [Tooltip("Действие вращения камеры в плоскости")]
         public InputAction mouseControls;
 
         private Vector2 eulerRotation;
