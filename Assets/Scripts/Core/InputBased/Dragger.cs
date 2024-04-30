@@ -63,7 +63,7 @@ namespace MouthTrainer.Input
                 checkingInLayer)
                 )
             {
-                if (hit.transform.TryGetComponent(out IDraggable comp))
+                if (hit.transform.TryGetComponent(out IDraggable comp) && comp.AvailableToDrag())
                 {
                     if (groupingButton.IsPressed())
                     {
