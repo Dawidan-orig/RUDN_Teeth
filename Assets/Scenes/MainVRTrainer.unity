@@ -205,7 +205,7 @@ MonoBehaviour:
       m_Action: Axis Movement Input
       m_Flags: 8
     m_Flags: 0
-  rotationSpeed: 10
+  rotationSpeed: 50
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
