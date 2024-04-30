@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,89 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &375080164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1137414543721599098, guid: ddbea4044dbd1d441ae9089c07186eaf, type: 3}
+  m_PrefabInstance: {fileID: 9054025305198107400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &375080165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375080164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1bbd7cf580294d43ab6f0fe3fe2abbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axisMovementInput:
+    m_Name: Axis Movement Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fd467e12-01b6-4115-b02a-24f76e955374
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: AxisRotation
+      m_Id: 5ddadbb9-2770-483c-b231-3b76256e19df
+      m_Path: 3DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 4
+    - m_Name: up
+      m_Id: e910c336-7d40-4ffa-8e98-4ec11788c9f6
+      m_Path: <Keyboard>/home
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 8ba89189-65f4-459c-8205-ff960aa9aa15
+      m_Path: <Keyboard>/end
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 51eec579-cfa3-4fbd-bd0b-30f1599bcb3e
+      m_Path: <Keyboard>/delete
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    - m_Name: right
+      m_Id: d69bc9e4-3d18-462a-85e3-494ba5896cca
+      m_Path: <Keyboard>/pageDown
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    - m_Name: forward
+      m_Id: 2d9a3971-4f6a-45a7-8072-be1ce734a03e
+      m_Path: <Keyboard>/insert
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    - m_Name: backward
+      m_Id: d645c729-8663-4173-bd3d-a544943984b7
+      m_Path: <Keyboard>/pageUp
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Axis Movement Input
+      m_Flags: 8
+    m_Flags: 0
+  rotationSpeed: 10
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,6 +1772,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1137414543721599098, guid: ddbea4044dbd1d441ae9089c07186eaf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 375080165}
     - targetCorrespondingSourceObject: {fileID: 6956721923917636576, guid: ddbea4044dbd1d441ae9089c07186eaf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5107019208050178377}
